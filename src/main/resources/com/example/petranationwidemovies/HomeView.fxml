@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableView?>
 <GridPane fx:controller="com.example.petranationwidemovies.UserController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" style="-fx-background-color: #FFFFFF;">
     <columnConstraints>
         <ColumnConstraints percentWidth="10" hgrow="ALWAYS"/>
@@ -82,8 +83,8 @@
     </VBox>
 
     <!-- Main Content -->
-    <VBox spacing="10" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-background-color: #FFFFFF; -fx-padding: 0px 20px">
+    <VBox spacing="10" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-background-color: #FFFFFF; -fx-padding: 0px 20px 20px 20px">
         <Label text="Home" style="-fx-font-size: 48px; -fx-font-weight: bold" />
-        <ListView fx:id="movieListView"></ListView>
+        <TableView fx:id="movieTableView"></TableView>
     </VBox>
 </GridPane>

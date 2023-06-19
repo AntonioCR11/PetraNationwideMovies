@@ -17,10 +17,10 @@
 
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Hyperlink?>
-<GridPane fx:controller="com.example.petranationwidemovies.LoginController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" style="-fx-background-color: #FFFFFF;">
+<?import javafx.scene.control.ChoiceBox?>
+<GridPane fx:controller="com.example.petranationwidemovies.UserController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" style="-fx-background-color: #FFFFFF;">
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" />
-        <ColumnConstraints hgrow="NEVER" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints vgrow="ALWAYS" />
@@ -31,33 +31,26 @@
             <Insets right="50" left="50" />
         </padding>
 
-        <VBox alignment="CENTER">
-            <Label text="Hi, There!" style="-fx-font-size: 48px; -fx-font-weight: bold" />
-            <Label text="Welcome to Petra Nationwide Movies!" style="-fx-font-size: 12px;" />
+        <VBox alignment="CENTER_LEFT">
+            <Label fx:id="bookingMovieName"  style="-fx-font-size: 24px; -fx-font-weight: bold" />
+            <Label fx:id="bookingMoviePrice"  style="-fx-font-size: 20px;" />
+        </VBox>
+
+
+        <VBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Total Ticket" />
+            <TextField fx:id="totalTicketField" style="-fx-padding: 10px 20px" promptText="Input ticket quantity..."/>
         </VBox>
 
         <VBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="NRP" />
-            <TextField fx:id="nrpField" style="-fx-padding: 10px 20px" promptText="Input your nrp..."/>
-        </VBox>
-
-        <VBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Password" />
-            <PasswordField fx:id="passwordField" style="-fx-padding: 10px 20px" promptText="Input your password..."/>
+            <Label text="Payment Method" />
+<!--            <TextField fx:id="" style="-fx-padding: 10px 20px" promptText="Input your nrp..."/>-->
+            <ChoiceBox fx:id="paymentMethodField"></ChoiceBox>
         </VBox>
 
         <Label fx:id="errorMessageLabel" textFill="red" />
-        <Button fx:id="loginBtn" text="Login" onAction="#loginButtonClicked" style="-fx-padding: 8px 30px"/>
-        <Hyperlink fx:id="toRegister" onAction="#toRegisterClicked">Create new account!</Hyperlink>
+        <Button fx:id="bookBtn" onAction="#bookButtonClicked" text="Buy Ticket" style="-fx-padding: 8px 30px"/>
     </VBox>
-
-    <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0">
-        <ImageView fitWidth="360" fitHeight="480" preserveRatio="true">
-            <image>
-                <Image url="/banner.png" />
-            </image>
-        </ImageView>
-    </StackPane>
 
 
 </GridPane>

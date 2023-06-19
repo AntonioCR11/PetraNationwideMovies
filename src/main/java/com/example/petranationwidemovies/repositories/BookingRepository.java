@@ -33,6 +33,11 @@ public class BookingRepository extends AbstractRepository {
         return executeQuery(ps);
     }
 
+    public Object getByUserId(int id) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(getQuery+" where user_id = ?");
+        ps.setInt(1,id);
+        return executeQuery(ps);
+    }
     private Object executeQuery(PreparedStatement ps) throws SQLException {
         ResultSet rs = ps.executeQuery();
         List<Booking> ls = new ArrayList<>();

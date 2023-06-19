@@ -4,7 +4,7 @@ public class Booking {
     private int id;
     private double total_price;
     private int booked_seat;
-    private PaymentMethod paymentMethod;
+        private PaymentMethod paymentMethod;
     private User user;
     private Movie movie;
 
