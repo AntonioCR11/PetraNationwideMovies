@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -37,16 +38,23 @@ public class RegisterController {
         UserRepository userRepository = new UserRepository();
         try {
             userRepository.add(user);
+            errorMessageLabel.setTextFill(Color.GREEN);
+            errorMessageLabel.setText("Register berhasil, silahkan login!");
+
+            nrpField.setText("");
+            usernameField.setText("");
+            passwordField.setText("");
+
         } catch (SQLException e) {
             errorMessageLabel.setText("NRP sudah dipakai!");
             return;
         }
 
-        Stage stageTheLabelBelongs = (Stage) registerBtn.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginView.fxml"));
-        stageTheLabelBelongs.setResizable(false);
-        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
-        stageTheLabelBelongs.setScene(scene);
+//        Stage stageTheLabelBelongs = (Stage) registerBtn.getScene().getWindow();
+//        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginView.fxml"));
+//        stageTheLabelBelongs.setResizable(false);
+//        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
+//        stageTheLabelBelongs.setScene(scene);
     }
     @FXML
     private void toLoginClicked() throws IOException {

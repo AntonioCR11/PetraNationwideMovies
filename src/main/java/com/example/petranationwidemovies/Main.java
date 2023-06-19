@@ -26,7 +26,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-//        DatabaseConnection.migrate();
-        launch();
+        DatabaseConnection.migrate();
+//        launch();
     }
 }

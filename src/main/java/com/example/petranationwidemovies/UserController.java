@@ -65,6 +65,8 @@ public class UserController implements Initializable {
     public TextField nrpField = new TextField();
     @FXML
     public PasswordField passwordField = new PasswordField();
+    @FXML
+    public PasswordField newpasswordField = new PasswordField();
 
     // INISIALISASI PAGE" CUSTOMER
     @Override
@@ -295,14 +297,20 @@ public class UserController implements Initializable {
         User newUser = new User();
         newUser.setName(usernameField.getText());
         newUser.setNrp(nrpField.getText());
-        newUser.setPassword(passwordField.getText());
+        newUser.setPassword(newpasswordField.getText());
         newUser.setId(UserLogin.getUser().getId());
+
+        if(!passwordField.getText().equals(UserLogin.getUser().getPassword())){
+            errorMessageLabel.setText("Password invalid");
+            return;
+        }
 
         try {
             userRepository.update(newUser);
             errorMessageLabel.setTextFill(Color.GREEN);
             errorMessageLabel.setText("Update berhasil!");
             passwordField.setText("");
+            newpasswordField.setText("");
             UserLogin.setUser(newUser);
         }
         catch (SQLException e){

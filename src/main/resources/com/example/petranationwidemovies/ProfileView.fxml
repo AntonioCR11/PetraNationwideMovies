@@ -93,6 +93,10 @@
         </VBox>
 
         <VBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="New Password" />
+            <PasswordField fx:id="newpasswordField" style="-fx-padding: 10px 20px" promptText="Input your password..."/>
+        </VBox>
+        <VBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Password" />
             <PasswordField fx:id="passwordField" style="-fx-padding: 10px 20px" promptText="Input your password..."/>
         </VBox>

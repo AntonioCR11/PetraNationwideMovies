@@ -1,112 +1,181 @@
-/*
-SQLyog Community v13.1.9 (64 bit)
-MySQL - 10.4.21-MariaDB : Database - pnmovies
-*********************************************************************
-*/
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Generation Time: Jun 19, 2023 at 06:10 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
-/*!40101 SET NAMES utf8 */;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-/*!40101 SET SQL_MODE=''*/;
 
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`pnmovies` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Database: `pnmovies`
+--
+CREATE DATABASE IF NOT EXISTS `pnmovies` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `pnmovies`;
 
-/*Table structure for table `bookings` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `bookings`;
+--
+-- Table structure for table `bookings`
+--
 
 CREATE TABLE `bookings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `movie_id` int(11) NOT NULL,
-  `payment_method_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `movie_id` int NOT NULL,
+  `payment_method_id` int NOT NULL,
   `total_price` decimal(10,2) NOT NULL,
-  `booked_seat` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `bookings_movies_id_fk` (`movie_id`),
-  KEY `bookings_payment_methods_id_fk` (`payment_method_id`),
-  KEY `bookings_users_id_fk` (`user_id`),
-  CONSTRAINT `bookings_movies_id_fk` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`),
-  CONSTRAINT `bookings_payment_methods_id_fk` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_methods` (`id`),
-  CONSTRAINT `bookings_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+  `booked_seat` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
 
-/*Table structure for table `locations` */
-
-DROP TABLE IF EXISTS `locations`;
-
-CREATE TABLE `locations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `building` varchar(255) NOT NULL,
-  `room` varchar(255) NOT NULL,
-  `total_seat` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
-
-/*Data for the table `locations` */
-
-insert  into `locations`(`id`,`building`,`room`,`total_seat`) values 
-(1,'Q','Amphitheater',100),
-(2,'T','AVT.502',100),
-(3,'P','P.707',100);
-
-/*Table structure for table `movies` */
-
-DROP TABLE IF EXISTS `movies`;
+--
+-- Table structure for table `movies`
+--
 
 CREATE TABLE `movies` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
   `playing_time` time NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `location_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `movies_locations_id_fk` (`location_id`),
-  CONSTRAINT `movies_locations_id_fk` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+  `location_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `movies`
+--
 
-/*Table structure for table `payment_methods` */
+INSERT INTO `movies` (`id`, `name`, `image`, `start_date`, `end_date`, `playing_time`, `price`, `location_id`) VALUES
+(1, 'The Avengers', 'image1.jpg', '2023-06-20 00:00:00', '2023-06-30 00:00:00', '02:30:00', 75000.00, 1),
+(2, 'Inception', 'image2.jpg', '2023-06-21 00:00:00', '2023-07-01 00:00:00', '02:28:00', 30000.00, 2),
+(3, 'The Shawshank Redemption', 'image3.jpg', '2023-06-22 00:00:00', '2023-07-02 00:00:00', '02:22:00', 25000.00, 3),
+(4, 'Pulp Fiction', 'image4.jpg', '2023-06-23 00:00:00', '2023-07-03 00:00:00', '02:34:00', 40000.00, 1),
+(5, 'The Godfather', 'image5.jpg', '2023-06-24 00:00:00', '2023-07-04 00:00:00', '02:55:00', 40000.00, 2),
+(6, 'Titanic', 'image6.jpg', '2023-06-25 00:00:00', '2023-07-05 00:00:00', '03:14:00', 55000.00, 3),
+(7, 'Jurassic Park', 'image7.jpg', '2023-06-26 00:00:00', '2023-07-06 00:00:00', '02:07:00', 60000.00, 1),
+(8, 'The Lion King', 'image8.jpg', '2023-06-27 00:00:00', '2023-07-07 00:00:00', '01:58:00', 20000.00, 2),
+(9, 'Interstellar', 'image9.jpg', '2023-06-28 00:00:00', '2023-07-08 00:00:00', '02:49:00', 45000.00, 3),
+(10, 'The Dark Knight', 'image10.jpg', '2023-06-29 00:00:00', '2023-07-09 00:00:00', '02:32:00', 15000.00, 1);
 
-DROP TABLE IF EXISTS `payment_methods`;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_methods`
+--
 
 CREATE TABLE `payment_methods` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+  `id` int NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-/*Data for the table `payment_methods` */
+--
+-- Dumping data for table `payment_methods`
+--
 
-insert  into `payment_methods`(`id`,`name`) values 
-(1,'ShopeePay'),
-(2,'OVO'),
-(3,'GoPay');
+INSERT INTO `payment_methods` (`id`, `name`) VALUES
+(1, 'ShopeePay'),
+(2, 'OVO'),
+(3, 'GoPay');
 
-/*Table structure for table `users` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `users`;
+--
+-- Table structure for table `users`
+--
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL,
   `nrp` varchar(15) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `users_pk` (`nrp`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `users`
+--
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+INSERT INTO `users` (`id`, `nrp`, `password`, `name`) VALUES
+(1, '123456789', '456', 'VictorJago'),
+(2, '987654321', '321', 'jane.smith'),
+(3, '246813579', '234', 'alex.wilson'),
+(4, '135792468', '456', 'emily.jackson'),
+(6, '220116969', '123', 'Victor'),
+(8, '220115678', '123', 'Nicho'),
+(9, '220116789', '321', 'JJ_Jago'),
+(11, '220116906', '123', 'Antonio Christopher'),
+(12, '220115665', '123', 'Nicholas Hartono');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `movies`
+--
+ALTER TABLE `movies`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `movies_locations_id_fk` (`location_id`);
+
+--
+-- Indexes for table `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_pk` (`nrp`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `movies`
+--
+ALTER TABLE `movies`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `movies`
+--
+ALTER TABLE `movies`
+  ADD CONSTRAINT `movies_locations_id_fk` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
