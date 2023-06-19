@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ListView?>
+<GridPane fx:controller="com.example.petranationwidemovies.UserController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" style="-fx-background-color: #FFFFFF;">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="10" hgrow="ALWAYS"/>
+        <ColumnConstraints percentWidth="90" hgrow="ALWAYS"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS" />
+    </rowConstraints>
+
+    <!-- Left Side Menu -->
+    <VBox spacing="10" alignment="TOP_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-background-color: #0b1f14; -fx-padding: 20px">
+        <VBox>
+            <Button fx:id="movieButton" styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: transparent">
+                <graphic>
+                    <ImageView fitWidth="25" fitHeight="25">
+                        <image>
+                            <Image url="/movie_icon.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Label text="𝙿𝙽𝙼" style="-fx-font-size: 18px; -fx-font-weight: bold;" textFill="white"/>
+        </VBox>
+        <Button fx:id="homeButton" onAction="#homeButtonClicked" styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;">
+            <graphic>
+                <ImageView fitWidth="25" fitHeight="25">
+                    <image>
+                        <Image url="/home_icon.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button fx:id="transactionButton" onAction="#transactionButtonClicked"  styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;">
+            <graphic>
+                <ImageView fitWidth="25" fitHeight="25">
+                    <image>
+                        <Image url="/history_icon.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button fx:id="profileButton" onAction="#profileButtonClicked" styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;">
+            <graphic>
+                <ImageView fitWidth="25" fitHeight="25">
+                    <image>
+                        <Image url="/person_icon.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Button fx:id="logoutButton" onAction="#logoutButtonClicked" styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;">
+            <graphic>
+                <ImageView fitWidth="25" fitHeight="25">
+                    <image>
+                        <Image url="/logout_icon.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+    </VBox>
+
+    <!-- Main Content -->
+    <VBox spacing="10" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-background-color: #FFFFFF; -fx-padding: 0px 20px">
+        <Label text="Home" style="-fx-font-size: 48px; -fx-font-weight: bold" />
+        <ListView fx:id="movieListView"></ListView>
+    </VBox>
+</GridPane>
