@@ -10,8 +10,8 @@ import java.util.List;
 
 public class UserRepository extends AbstractRepository {
     private String getQuery = "select * from users";
-    private String insertQuery = "insert into users (nrp, name, password) values (?, ?, ?)";
-    private String updateQuery = "update users set nrp = ?, name = ?, password = ? where id = ?";
+    private String insertQuery = "insert into users (nrp, name, password, role) values (?, ?, ?, ?)";
+    private String updateQuery = "update users set nrp = ?, name = ?, password = ?, role = ? where id = ?";
     private String deleteQuery = "delete from users where id = ?";
 
     @Override
@@ -21,6 +21,7 @@ public class UserRepository extends AbstractRepository {
         ps.setString(1, user.getNrp());
         ps.setString(2, user.getName());
         ps.setString(3, user.getPassword());
+        ps.setInt(4, user.getRole());
         return ps.executeUpdate();
     }
 
@@ -49,6 +50,11 @@ public class UserRepository extends AbstractRepository {
             user.setPassword(rs.getString("password"));
         }
         return user;
+    }
+    public Object getByRole(int role) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(getQuery + " where role = ?");
+        ps.setInt(1, role);
+        return executeQuery(ps);
     }
 
     public Object getByNrpAndPassword(String nrp, String password) throws SQLException {
@@ -80,7 +86,8 @@ public class UserRepository extends AbstractRepository {
         ps.setString(1, user.getNrp());
         ps.setString(2, user.getName());
         ps.setString(3, user.getPassword());
-        ps.setInt(4, user.getId());
+        ps.setInt(4, user.getRole());
+        ps.setInt(5, user.getId());
         return ps.executeUpdate();
     }
 

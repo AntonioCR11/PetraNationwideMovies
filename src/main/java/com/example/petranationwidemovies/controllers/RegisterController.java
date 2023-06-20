@@ -31,7 +31,12 @@ public class RegisterController {
         String nrp = nrpField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
-        User user = new User(username,nrp,password);
+        User user = new User();
+        user.setName(username);
+        user.setNrp(nrp);
+        user.setPassword(password);
+        // todo set role
+        user.setRole(1);
         if (isValidRegister(username,nrp,password)){
             errorMessageLabel.setText("Field Invalid!");
             return;
