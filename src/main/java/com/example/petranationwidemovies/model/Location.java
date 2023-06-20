@@ -6,19 +6,6 @@ public class Location {
     private String room;
     private int total_seat;
 
-    public Location(int id, String building, String room, int total_seat) {
-        this.id = id;
-        this.building = building;
-        this.room = room;
-        this.total_seat = total_seat;
-    }
-
-    public Location(String building, String room, int total_seat) {
-        this.building = building;
-        this.room = room;
-        this.total_seat = total_seat;
-    }
-
     public Location() {
     }
 

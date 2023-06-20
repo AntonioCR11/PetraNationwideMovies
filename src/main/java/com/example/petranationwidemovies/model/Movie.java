@@ -13,27 +13,6 @@ public class Movie {
     private double price;
     private Location location;
 
-    public Movie(int id, String name, String image, Timestamp start_date, Timestamp end_date, Time playing_time, double price, Location location) {
-        this.id = id;
-        this.name = name;
-        this.start_date = start_date;
-        this.end_date = end_date;
-        this.playing_time = playing_time;
-        this.price = price;
-        this.location = location;
-        this.image = image;
-    }
-
-    public Movie(String name, String image, Timestamp start_date, Timestamp end_date, Time playing_time, double price, Location location) {
-        this.name = name;
-        this.start_date = start_date;
-        this.end_date = end_date;
-        this.playing_time = playing_time;
-        this.price = price;
-        this.location = location;
-        this.image = image;
-    }
-
     public Movie() {
     }
 

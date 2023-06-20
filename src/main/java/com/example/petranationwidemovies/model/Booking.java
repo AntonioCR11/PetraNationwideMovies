@@ -4,26 +4,9 @@ public class Booking {
     private int id;
     private double total_price;
     private int booked_seat;
-        private PaymentMethod paymentMethod;
+    private PaymentMethod paymentMethod;
     private User user;
     private Movie movie;
-
-    public Booking(int id, double total_price, int booked_seat, User user, Movie movie, PaymentMethod paymentMethod) {
-        this.id = id;
-        this.total_price = total_price;
-        this.booked_seat = booked_seat;
-        this.user = user;
-        this.movie = movie;
-        this.paymentMethod = paymentMethod;
-    }
-
-    public Booking(double total_price, int booked_seat, User user, Movie movie, PaymentMethod paymentMethod) {
-        this.total_price = total_price;
-        this.booked_seat = booked_seat;
-        this.user = user;
-        this.movie = movie;
-        this.paymentMethod = paymentMethod;
-    }
 
     public Booking() {
     }

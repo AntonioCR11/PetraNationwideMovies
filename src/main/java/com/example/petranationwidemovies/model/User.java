@@ -6,21 +6,7 @@ public class User {
     private String nrp;
     private String password;
     private int role;
-
-    public User(int id, String name, String nrp, String password, int role) {
-        this.id = id;
-        this.name = name;
-        this.nrp = nrp;
-        this.password = password;
-        this.role = role;
-    }
-
-    public User(String name, String nrp, String password, int role) {
-        this.name = name;
-        this.nrp = nrp;
-        this.password = password;
-        this.role = role;
-    }
+    private String phone;
 
     public User() {
     }
@@ -63,6 +49,14 @@ public class User {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override

@@ -10,8 +10,8 @@ import java.util.List;
 
 public class UserRepository extends AbstractRepository {
     private String getQuery = "select * from users";
-    private String insertQuery = "insert into users (nrp, name, password, role) values (?, ?, ?, ?)";
-    private String updateQuery = "update users set nrp = ?, name = ?, password = ?, role = ? where id = ?";
+    private String insertQuery = "insert into users (nrp, name, password, role, phone) values (?, ?, ?, ?, ?)";
+    private String updateQuery = "update users set nrp = ?, name = ?, password = ?, role = ?, phone = ? where id = ?";
     private String deleteQuery = "delete from users where id = ?";
 
     @Override
@@ -22,6 +22,7 @@ public class UserRepository extends AbstractRepository {
         ps.setString(2, user.getName());
         ps.setString(3, user.getPassword());
         ps.setInt(4, user.getRole());
+        ps.setString(5, user.getPhone());
         return ps.executeUpdate();
     }
 
@@ -46,6 +47,8 @@ public class UserRepository extends AbstractRepository {
         while (rs.next()) {
             user.setId(rs.getInt("id"));
             user.setName(rs.getString("name"));
+            user.setPhone(rs.getString("phone"));
+            user.setRole(rs.getInt("role"));
             user.setNrp(rs.getString("nrp"));
             user.setPassword(rs.getString("password"));
         }
@@ -72,6 +75,8 @@ public class UserRepository extends AbstractRepository {
             User u = new User();
             u.setId(rs.getInt("id"));
             u.setName(rs.getString("name"));
+            u.setPhone(rs.getString("phone"));
+            u.setRole(rs.getInt("role"));
             u.setNrp(rs.getString("nrp"));
             u.setPassword(rs.getString("password"));
             ls.add(u);
@@ -87,7 +92,8 @@ public class UserRepository extends AbstractRepository {
         ps.setString(2, user.getName());
         ps.setString(3, user.getPassword());
         ps.setInt(4, user.getRole());
-        ps.setInt(5, user.getId());
+        ps.setString(5, user.getPhone());
+        ps.setInt(6, user.getId());
         return ps.executeUpdate();
     }
 
