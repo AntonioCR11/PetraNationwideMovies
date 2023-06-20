@@ -1,5 +1,6 @@
-package com.example.petranationwidemovies;
+package com.example.petranationwidemovies.controllers;
 
+import com.example.petranationwidemovies.Main;
 import com.example.petranationwidemovies.model.*;
 import com.example.petranationwidemovies.repositories.BookingRepository;
 import com.example.petranationwidemovies.repositories.MovieRepository;
@@ -16,6 +17,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -27,6 +30,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class UserController implements Initializable {
+    // Variable navigasi
     @FXML
     private Button homeButton;
     @FXML
@@ -36,15 +40,19 @@ public class UserController implements Initializable {
     @FXML
     private Button logoutButton;
 
+    // Variable untuk home
     @FXML
     TableView movieTableView = new TableView();
+    ObservableList<Map<String, Object>> movieItems = FXCollections.<Map<String, Object>>observableArrayList();
+
+    // Variable untuk transaction
     @FXML
     TableView transactionTableView = new TableView();
-    ObservableList<Map<String, Object>> movieItems = FXCollections.<Map<String, Object>>observableArrayList();
     ObservableList<Map<String, Object>> transactionItems = FXCollections.<Map<String, Object>>observableArrayList();
-    ObservableList<String> paymentItems = FXCollections.observableArrayList();
 
-    // MOVIE POPUP
+    // Variable movie popup
+    @FXML
+    public ImageView bookingMovieImage = new ImageView();
     @FXML
     public Label bookingMovieName = new Label();
     @FXML
@@ -53,12 +61,13 @@ public class UserController implements Initializable {
     public TextField totalTicketField;
     @FXML
     public ChoiceBox<String> paymentMethodField = new ChoiceBox<>();;
+    ObservableList<String> paymentItems = FXCollections.observableArrayList();
     @FXML
     public Label errorMessageLabel;
     @FXML
     public Button bookBtn;
 
-    // PROFILE
+    // Variable profile page
     @FXML
     public TextField usernameField = new TextField();
     @FXML
@@ -68,7 +77,7 @@ public class UserController implements Initializable {
     @FXML
     public PasswordField newpasswordField = new PasswordField();
 
-    // INISIALISASI PAGE" CUSTOMER
+    // Inisialisasi data page" user
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setMovieTableView();
@@ -77,8 +86,8 @@ public class UserController implements Initializable {
         setProfileData();
     }
 
-    public void setMovieTableView()
-    {
+    // Function untuk memanggil data dan menempelkan kedalam elemen pada view
+    public void setMovieTableView(){
         Platform.runLater(() -> {
             TableColumn<Map, String> idColumn = new TableColumn<>("id");
             idColumn.setCellValueFactory(new MapValueFactory<>("id"));
@@ -147,7 +156,7 @@ public class UserController implements Initializable {
                         throw new RuntimeException(e);
                     }
 
-                    Scene scene = new Scene(root, 480, 360);
+                    Scene scene = new Scene(root, 640, 480);
                     stage.setResizable(false);
                     stage.setScene(scene);
                     stage.setTitle("Booking Ticket");
@@ -159,10 +168,8 @@ public class UserController implements Initializable {
             }
         });
     }
-    public void setTransactionTableView()
-    {
+    public void setTransactionTableView() {
         Platform.runLater(() -> {
-
             TableColumn<Map, String> idColumn = new TableColumn<>("id");
             idColumn.setCellValueFactory(new MapValueFactory<>("id"));
             TableColumn<Map, String> movie = new TableColumn<>("movie");
@@ -173,12 +180,15 @@ public class UserController implements Initializable {
             total_price.setCellValueFactory(new MapValueFactory<>("total_price"));
             TableColumn<Map, String> payment_method = new TableColumn<>("payment_method");
             payment_method.setCellValueFactory(new MapValueFactory<>("payment_method"));
+            TableColumn<Map, String> action = new TableColumn<>("action");
+            action.setCellValueFactory(new MapValueFactory<>("action"));
 
             transactionTableView.getColumns().add(idColumn);
             transactionTableView.getColumns().add(movie);
             transactionTableView.getColumns().add(booked_seat);
             transactionTableView.getColumns().add(total_price);
             transactionTableView.getColumns().add(payment_method);
+            transactionTableView.getColumns().add(action);
 
             BookingRepository bookingRepository = new BookingRepository();
             try {
@@ -190,6 +200,28 @@ public class UserController implements Initializable {
                     item.put("booked_seat" , booking.getBooked_seat());
                     item.put("total_price", booking.getTotal_price());
                     item.put("payment_method" , booking.getPaymentMethod().getName());
+
+                    // Cancel button
+                    Button button = new Button();
+                    button.setId(booking.getId()+"");
+                    button.setText("Cancel");
+                    button.setTextFill(Color.WHITE);
+                    button.setStyle("-fx-background-color: red");
+                    button.setOnMouseClicked(mouseEvent ->{
+                        try {
+                            BookingRepository bookRepo = new BookingRepository();
+                            int bookingID = Integer.parseInt(button.getId());
+                            bookRepo.delete(bookingID);
+                            transactionButtonClicked();
+                        } catch (SQLException e) {
+                            System.out.println(e.getMessage());
+                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
+                    item.put("action" , button);
                     transactionItems.add(item);
                 }
 
@@ -203,6 +235,8 @@ public class UserController implements Initializable {
     public void setBookingPopup(){
         Platform.runLater(() -> {
             if(SelectedMovie.getMovie() != null){
+                Image image = new Image(SelectedMovie.getMovie().getImage());
+                bookingMovieImage.setImage(image);
                 bookingMovieName.setText(SelectedMovie.getMovie().getName());
                 bookingMoviePrice.setText("Price : "+SelectedMovie.getMovie().getPrice());
 
@@ -222,7 +256,6 @@ public class UserController implements Initializable {
             }
         });
     }
-
     public void setProfileData(){
         Platform.runLater(() -> {
             usernameField.setText(UserLogin.getUser().getName());
@@ -230,29 +263,30 @@ public class UserController implements Initializable {
         });
     }
 
-    // NAVIGASI
+
+    // Function Navigasi antar page
     @FXML
     private void homeButtonClicked() throws IOException {
-        Stage stageTheLabelBelongs = (Stage) logoutButton.getScene().getWindow();
+        Stage stageTheLabelBelongs = (Stage) homeButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("HomeView.fxml"));
         stageTheLabelBelongs.setResizable(false);
-        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stageTheLabelBelongs.setScene(scene);
     }
     @FXML
     private void transactionButtonClicked() throws IOException {
-        Stage stageTheLabelBelongs = (Stage) logoutButton.getScene().getWindow();
+        Stage stageTheLabelBelongs = (Stage) transactionButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("TransactionView.fxml"));
         stageTheLabelBelongs.setResizable(false);
-        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stageTheLabelBelongs.setScene(scene);
     }
     @FXML
     private void profileButtonClicked() throws IOException {
-        Stage stageTheLabelBelongs = (Stage) logoutButton.getScene().getWindow();
+        Stage stageTheLabelBelongs = (Stage) profileButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ProfileView.fxml"));
         stageTheLabelBelongs.setResizable(false);
-        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stageTheLabelBelongs.setScene(scene);
     }
     @FXML
@@ -260,11 +294,11 @@ public class UserController implements Initializable {
         Stage stageTheLabelBelongs = (Stage) logoutButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginView.fxml"));
         stageTheLabelBelongs.setResizable(false);
-        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stageTheLabelBelongs.setScene(scene);
     }
 
-    // TRANSAKSI
+    // Function Page Transaksi
     @FXML
     private void bookButtonClicked() throws IOException, SQLException {
         BookingRepository bookingRepository = new BookingRepository();
@@ -289,7 +323,7 @@ public class UserController implements Initializable {
         stageTheLabelBelongs.close();
     }
 
-    // PROFILE
+    // Function Page Profile
     @FXML
     private void updateButtonClicked() {
         UserRepository userRepository = new UserRepository();

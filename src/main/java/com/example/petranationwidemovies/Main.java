@@ -17,16 +17,17 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        // open login window
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginView.fxml"));
         stage.setResizable(false);
-        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setTitle("Petra Nationwide Movies");
         stage.setScene(scene);
         stage.show();
     }
 
     public static void main(String[] args) {
-//        DatabaseConnection.migrate();
+//         DatabaseConnection.migrate();
         launch();
     }
 }

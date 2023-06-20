@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.ChoiceBox?>
-<GridPane fx:controller="com.example.petranationwidemovies.UserController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" style="-fx-background-color: #FFFFFF;">
+<GridPane fx:controller="com.example.petranationwidemovies.controllers.UserController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" style="-fx-background-color: #FFFFFF;">
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" />
     </columnConstraints>
@@ -28,14 +28,17 @@
 
     <VBox spacing="7" alignment="center" GridPane.columnIndex="0" GridPane.rowIndex="0">
         <padding>
-            <Insets right="50" left="50" />
+            <Insets right="50" left="50" top="50" bottom="50"/>
         </padding>
 
-        <VBox alignment="CENTER_LEFT">
-            <Label fx:id="bookingMovieName"  style="-fx-font-size: 24px; -fx-font-weight: bold" />
-            <Label fx:id="bookingMoviePrice"  style="-fx-font-size: 20px;" />
-        </VBox>
+        <HBox spacing="30" alignment="TOP_LEFT">
+            <ImageView fx:id="bookingMovieImage" fitHeight="200" preserveRatio="true"></ImageView>
 
+            <VBox alignment="CENTER_LEFT">
+                <Label fx:id="bookingMovieName" wrapText="true" style="-fx-font-size: 48px; -fx-font-weight: bold" />
+                <Label fx:id="bookingMoviePrice"  style="-fx-font-size: 20px;" />
+            </VBox>
+        </HBox>
 
         <VBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Total Ticket" />

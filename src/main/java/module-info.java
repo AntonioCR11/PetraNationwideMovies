@@ -8,4 +8,6 @@ module com.example.petranationwidemovies {
 
     opens com.example.petranationwidemovies to javafx.fxml;
     exports com.example.petranationwidemovies;
+    exports com.example.petranationwidemovies.controllers;
+    opens com.example.petranationwidemovies.controllers to javafx.fxml;
 }

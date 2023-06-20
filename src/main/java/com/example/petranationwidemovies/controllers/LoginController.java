@@ -1,5 +1,6 @@
-package com.example.petranationwidemovies;
+package com.example.petranationwidemovies.controllers;
 
+import com.example.petranationwidemovies.Main;
 import com.example.petranationwidemovies.model.User;
 import com.example.petranationwidemovies.model.UserLogin;
 import com.example.petranationwidemovies.repositories.UserRepository;
@@ -44,7 +45,7 @@ public class LoginController {
         Stage stageTheLabelBelongs = (Stage) toRegister.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("HomeView.fxml"));
         stageTheLabelBelongs.setResizable(false);
-        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stageTheLabelBelongs.setScene(scene);
     }
     @FXML
@@ -52,7 +53,7 @@ public class LoginController {
         Stage stageTheLabelBelongs = (Stage) toRegister.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("RegisterView.fxml"));
         stageTheLabelBelongs.setResizable(false);
-        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stageTheLabelBelongs.setScene(scene);
     }
     private boolean isValidLogin(String nrp, String password){

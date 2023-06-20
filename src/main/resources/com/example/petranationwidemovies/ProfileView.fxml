@@ -17,10 +17,10 @@
 
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Hyperlink?>
-<GridPane fx:controller="com.example.petranationwidemovies.UserController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" style="-fx-background-color: #FFFFFF;">
+<GridPane fx:controller="com.example.petranationwidemovies.controllers.UserController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" style="-fx-background-color: #FFFFFF;">
     <columnConstraints>
-        <ColumnConstraints percentWidth="10" hgrow="ALWAYS"/>
-        <ColumnConstraints percentWidth="90" hgrow="ALWAYS"/>
+        <ColumnConstraints percentWidth="12" hgrow="ALWAYS"/>
+        <ColumnConstraints percentWidth="88" hgrow="ALWAYS"/>
     </columnConstraints>
     <rowConstraints>
         <RowConstraints vgrow="ALWAYS" />
@@ -28,19 +28,20 @@
 
     <!-- Left Side Menu -->
     <VBox spacing="10" alignment="TOP_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-background-color: #0b1f14; -fx-padding: 20px">
-        <VBox>
+        <VBox alignment="CENTER">
             <Button fx:id="movieButton" styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: transparent">
                 <graphic>
-                    <ImageView fitWidth="25" fitHeight="25">
+                    <ImageView fitWidth="80" fitHeight="90">
                         <image>
-                            <Image url="/movie_icon.png" />
+                            <Image url="/logo2.png" />
                         </image>
                     </ImageView>
                 </graphic>
             </Button>
-            <Label text="𝙿𝙽𝙼" style="-fx-font-size: 18px; -fx-font-weight: bold;" textFill="white"/>
+            <!--            <Label text="PNM" style="-fx-font-size: 24px; -fx-font-weight: bold;" textFill="white"/>-->
         </VBox>
-        <Button fx:id="homeButton" onAction="#homeButtonClicked" styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;">
+
+        <Button maxWidth="300" alignment="CENTER_LEFT" fx:id="homeButton" text="Home" textFill="#026740" onAction="#homeButtonClicked" styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;">
             <graphic>
                 <ImageView fitWidth="25" fitHeight="25">
                     <image>
@@ -49,7 +50,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button fx:id="transactionButton" onAction="#transactionButtonClicked"  styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;">
+        <Button maxWidth="300" alignment="CENTER_LEFT" fx:id="transactionButton"  text="Transaction" textFill="#026740" onAction="#transactionButtonClicked"  styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;" >
             <graphic>
                 <ImageView fitWidth="25" fitHeight="25">
                     <image>
@@ -58,7 +59,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button fx:id="profileButton" onAction="#profileButtonClicked" styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;">
+        <Button maxWidth="300" alignment="CENTER_LEFT" fx:id="profileButton" text="Profile" textFill="#026740" onAction="#profileButtonClicked" styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;">
             <graphic>
                 <ImageView fitWidth="25" fitHeight="25">
                     <image>
@@ -67,8 +68,7 @@
                 </ImageView>
             </graphic>
         </Button>
-
-        <Button fx:id="logoutButton" onAction="#logoutButtonClicked" styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;">
+        <Button maxWidth="300" alignment="CENTER_LEFT" fx:id="logoutButton" text="Logout" textFill="#026740" onAction="#logoutButtonClicked" styleClass="menu-button" style="-fx-padding: 5px; -fx-background-color: #FFFFFF;">
             <graphic>
                 <ImageView fitWidth="25" fitHeight="25">
                     <image>
@@ -77,10 +77,11 @@
                 </ImageView>
             </graphic>
         </Button>
+
     </VBox>
 
     <!-- Main Content -->
-    <VBox spacing="10" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-background-color: #FFFFFF; -fx-padding: 0px 20px">
+    <VBox maxWidth="640" spacing="10" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-background-color: #FFFFFF; -fx-padding: 0px 20px 20px 20px">
         <Label text="Profile" style="-fx-font-size: 48px; -fx-font-weight: bold" />
 
         <VBox spacing="10" alignment="CENTER_LEFT">

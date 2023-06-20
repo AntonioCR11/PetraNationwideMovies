@@ -14,6 +14,7 @@ import java.util.List;
 public class BookingRepository extends AbstractRepository {
     private String getQuery = "select * from bookings";
     private String insertQuery = "insert into bookings (user_id, movie_id, payment_method_id, total_price, booked_seat) values (?, ?, ?, ?, ?)";
+    private String deleteQuery = "delete from bookings";
 
     @Override
     public int add(Object element) throws SQLException {
@@ -69,7 +70,10 @@ public class BookingRepository extends AbstractRepository {
     }
 
     @Override
-    public void delete(int id) throws SQLException {
-
+    public Object delete(int id) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(deleteQuery+" where id = ?");
+        ps.setInt(1,id);
+        ps.executeUpdate();
+        return null;
     }
 }

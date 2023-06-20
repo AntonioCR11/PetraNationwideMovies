@@ -95,9 +95,10 @@ public class MovieRepository extends AbstractRepository {
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public Object delete(int id) throws SQLException {
         PreparedStatement ps = conn.prepareStatement(deleteQuery);
         ps.setInt(1, id);
         ps.executeUpdate();
+        return null;
     }
 }

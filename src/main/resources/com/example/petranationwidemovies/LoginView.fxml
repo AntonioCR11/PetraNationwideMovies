@@ -17,7 +17,7 @@
 
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Hyperlink?>
-<GridPane fx:controller="com.example.petranationwidemovies.LoginController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" style="-fx-background-color: #FFFFFF;">
+<GridPane fx:controller="com.example.petranationwidemovies.controllers.LoginController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" style="-fx-background-color: #FFFFFF;">
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" />
         <ColumnConstraints hgrow="NEVER" />
@@ -26,33 +26,47 @@
         <RowConstraints vgrow="ALWAYS" />
     </rowConstraints>
 
-    <VBox spacing="7" alignment="center" GridPane.columnIndex="0" GridPane.rowIndex="0">
+    <VBox spacing="7" alignment="TOP_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="0">
         <padding>
-            <Insets right="50" left="50" />
+            <Insets top="100" bottom="100" right="100" left="100" />
         </padding>
 
+        <VBox alignment="TOP_LEFT">
+            <padding>
+                <Insets bottom="35" />
+            </padding>
+            <ImageView fitWidth="60" preserveRatio="true">
+                <image>
+                    <Image url="/logo.png" />
+                </image>
+            </ImageView>
+        </VBox>
+
         <VBox alignment="CENTER">
-            <Label text="Hi, There!" style="-fx-font-size: 48px; -fx-font-weight: bold" />
-            <Label text="Welcome to Petra Nationwide Movies!" style="-fx-font-size: 12px;" />
+            <Label text="Hi, There!" style="-fx-font-size: 64px; -fx-font-weight: bold" />
+            <Label text="Welcome to Petra Nationwide Movies!" style="-fx-font-size: 16px;" />
         </VBox>
 
         <VBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="NRP" />
-            <TextField fx:id="nrpField" style="-fx-padding: 10px 20px" promptText="Input your nrp..."/>
+            <Label text="NRP"  style="-fx-font-size: 16px;" />
+            <TextField fx:id="nrpField" style="-fx-padding: 10px 20px; -fx-font-size: 16px;" promptText="Input your nrp..."/>
         </VBox>
 
         <VBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Password" />
-            <PasswordField fx:id="passwordField" style="-fx-padding: 10px 20px" promptText="Input your password..."/>
+            <Label text="Password"  style="-fx-font-size: 16px;" />
+            <PasswordField fx:id="passwordField" style="-fx-padding: 10px 20px; -fx-font-size: 16px;" promptText="Input your password..."/>
         </VBox>
 
-        <Label fx:id="errorMessageLabel" textFill="red" />
-        <Button fx:id="loginBtn" text="Login" onAction="#loginButtonClicked" style="-fx-padding: 8px 30px"/>
-        <Hyperlink fx:id="toRegister" onAction="#toRegisterClicked">Create new account!</Hyperlink>
+        <VBox spacing="10" alignment="CENTER">
+            <Label fx:id="errorMessageLabel" textFill="red" style="-fx-font-size: 16px;"/>
+            <Button fx:id="loginBtn" text="Login"  onAction="#loginButtonClicked" style="-fx-padding: 10px 40px;-fx-font-size: 16px;"/>
+            <Hyperlink fx:id="toRegister"  onAction="#toRegisterClicked" style="-fx-font-size: 16px;">Create new account!</Hyperlink>
+        </VBox>
+
     </VBox>
 
     <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0">
-        <ImageView fitWidth="360" fitHeight="480" preserveRatio="true">
+        <ImageView fitWidth="640" preserveRatio="true">
             <image>
                 <Image url="/banner.png" />
             </image>
