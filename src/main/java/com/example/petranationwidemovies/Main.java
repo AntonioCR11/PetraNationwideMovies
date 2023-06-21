@@ -22,6 +22,8 @@ public class Main extends Application {
         stage.setResizable(false);
 
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        Image image = new Image("/logo.png");
+        stage.getIcons().add(image);
 
         stage.setTitle("Petra Nationwide Movies");
         stage.setScene(scene);
