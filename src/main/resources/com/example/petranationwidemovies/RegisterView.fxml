@@ -17,7 +17,7 @@
 
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Hyperlink?>
-<GridPane fx:controller="com.example.petranationwidemovies.controllers.RegisterController" xmlns:fx="http://javafx.com/fxml">
+<GridPane fx:controller="com.example.petranationwidemovies.controllers.RegisterController" xmlns:fx="http://javafx.com/fxml" style="-fx-background-color: #FFFFFF;">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" />
         <ColumnConstraints hgrow="ALWAYS" />
@@ -35,7 +35,7 @@
     </StackPane>
     <VBox spacing="7" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0">
         <padding>
-            <Insets top="100" bottom="100" right="100" left="100" />
+            <Insets top="50" bottom="50" right="100" left="100" />
         </padding>
 
         <VBox alignment="CENTER">
@@ -51,6 +51,10 @@
             <Label text="NRP" style="-fx-font-size: 16px;" />
             <TextField fx:id="nrpField" style="-fx-padding: 10px 20px;-fx-font-size: 16px;" promptText="Input your nrp..."/>
         </VBox>
+        <VBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Phone" style="-fx-font-size: 16px;" />
+            <TextField fx:id="phoneField" style="-fx-padding: 10px 20px;-fx-font-size: 16px;" promptText="Input your number..."/>
+        </VBox>
 
         <VBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Password" style="-fx-font-size: 16px;"/>
@@ -59,7 +63,7 @@
 
         <VBox spacing="10" alignment="CENTER">
             <Label fx:id="errorMessageLabel" textFill="red" style="-fx-font-size: 16px;"/>
-            <Button fx:id="registerBtn" text="Register" onAction="#registerButtonClicked" style="-fx-padding: 8px 30px;-fx-font-size: 16px;"/>
+            <Button fx:id="registerBtn" text="Register" textFill="white" onAction="#registerButtonClicked" style="-fx-padding: 8px 30px;-fx-background-color: #0b1f14;-fx-font-size: 16px;"/>
             <Hyperlink fx:id="toLogin" onAction="#toLoginClicked" style="-fx-font-size: 16px;">Login now!</Hyperlink>
         </VBox>
     </VBox>

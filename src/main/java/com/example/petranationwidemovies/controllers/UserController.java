@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.function.UnaryOperator;
 
 public class UserController implements Initializable {
     // Variable navigasi
@@ -77,13 +78,21 @@ public class UserController implements Initializable {
     @FXML
     public PasswordField newpasswordField = new PasswordField();
 
-    // Inisialisasi data page" user
+    // Inisialisasi data page" user untuk setiap url
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setMovieTableView();
-        setTransactionTableView();
-        setBookingPopup();
-        setProfileData();
+        if(url.toString().contains("HomeView")){
+            setMovieTableView();
+        }
+        else if(url.toString().contains("TransactionView")){
+            setTransactionTableView();
+        }
+        else if(url.toString().contains("TransactionModal")){
+            setBookingPopup();
+        }
+        else if(url.toString().contains("ProfileView")){
+            setProfileData();
+        }
     }
 
     // Function untuk memanggil data dan menempelkan kedalam elemen pada view
@@ -103,6 +112,8 @@ public class UserController implements Initializable {
             priceColumn.setCellValueFactory(new MapValueFactory<>("price"));
             TableColumn<Map, String> locationColumn = new TableColumn<>("location");
             locationColumn.setCellValueFactory(new MapValueFactory<>("location"));
+            TableColumn<Map, String> seatColumn = new TableColumn<>("available_seat");
+            seatColumn.setCellValueFactory(new MapValueFactory<>("available_seat"));
 
             movieTableView.getColumns().add(idColumn);
             movieTableView.getColumns().add(nameColumn);
@@ -111,8 +122,10 @@ public class UserController implements Initializable {
             movieTableView.getColumns().add(timeColumn);
             movieTableView.getColumns().add(priceColumn);
             movieTableView.getColumns().add(locationColumn);
+            movieTableView.getColumns().add(seatColumn);
 
             MovieRepository movieRepository = new MovieRepository();
+            BookingRepository bookingRepository = new BookingRepository();
             try {
                 List<Movie> movies = (List<Movie>) movieRepository.get();
                 for (Movie movie: movies) {
@@ -124,6 +137,9 @@ public class UserController implements Initializable {
                     item.put("playing_time" , movie.getPlaying_time().toString());
                     item.put("price", movie.getPrice());
                     item.put("location" ,  movie.getLocation().getBuilding()+"-"+ movie.getLocation().getRoom());
+
+                    Integer booked_seat = (Integer) bookingRepository.getBookedSeatForMovieId(movie.getId());
+                    item.put("available_seat" ,  (movie.getLocation().getTotal_seat() - booked_seat));
                     movieItems.add(item);
                 }
 
@@ -137,10 +153,16 @@ public class UserController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getClickCount() == 2){
-                    // GET SELECTED MOVIE
                     Map<String, Object> movie = (Map<String, Object>) movieTableView.getSelectionModel().getSelectedItem();
                     MovieRepository movieRepository = new MovieRepository();
                     int movieId = (int) movie.get("id");
+                    int availableSeat = (int) movie.get("available_seat");
+
+                    if(availableSeat == 0){
+                        errorMessageLabel.setText("* Kursi untuk film ini sudah tidak tersedia!");
+                        return ;
+                    }
+
                     try {
                         SelectedMovie.setMovie((Movie) movieRepository.get(movieId));
                     } catch (SQLException e) {
@@ -163,10 +185,37 @@ public class UserController implements Initializable {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.showAndWait();
 
-                    setBookingPopup();
+                    // update movie table
+                    updateMovieTableView();
+                    errorMessageLabel.setText("* Tiket untuk movie "+movie.get("name") + " berhasil dibeli!");
+                    errorMessageLabel.setTextFill(Color.GREEN);
                 }
             }
         });
+    }
+    public void updateMovieTableView(){
+        // Update tabel
+        MovieRepository movieRepository = new MovieRepository();
+        BookingRepository bookingRepository = new BookingRepository();
+        try {
+            List<Movie> movies = (List<Movie>) movieRepository.get();
+            for (int i = 0; i < movies.size(); i++) {
+                Movie movie = movies.get(i);
+                movieItems.get(i).replace("id", movie.getId());
+                movieItems.get(i).replace("name", movie.getName());
+                movieItems.get(i).replace("start_date" , movie.getStart_date().toString());
+                movieItems.get(i).replace("end_date", movie.getEnd_date().toString());
+                movieItems.get(i).replace("playing_time" , movie.getPlaying_time().toString());
+                movieItems.get(i).replace("price", movie.getPrice());
+                movieItems.get(i).replace("location" ,  movie.getLocation().getBuilding()+"-"+ movie.getLocation().getRoom());
+
+                Integer booked_seat = (Integer) bookingRepository.getBookedSeatForMovieId(movie.getId());
+                movieItems.get(i).replace("available_seat" ,  (movie.getLocation().getTotal_seat() - booked_seat));
+            }
+            movieTableView.refresh();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void setTransactionTableView() {
         Platform.runLater(() -> {
@@ -180,15 +229,12 @@ public class UserController implements Initializable {
             total_price.setCellValueFactory(new MapValueFactory<>("total_price"));
             TableColumn<Map, String> payment_method = new TableColumn<>("payment_method");
             payment_method.setCellValueFactory(new MapValueFactory<>("payment_method"));
-            TableColumn<Map, String> action = new TableColumn<>("action");
-            action.setCellValueFactory(new MapValueFactory<>("action"));
 
             transactionTableView.getColumns().add(idColumn);
             transactionTableView.getColumns().add(movie);
             transactionTableView.getColumns().add(booked_seat);
             transactionTableView.getColumns().add(total_price);
             transactionTableView.getColumns().add(payment_method);
-            transactionTableView.getColumns().add(action);
 
             BookingRepository bookingRepository = new BookingRepository();
             try {
@@ -201,27 +247,6 @@ public class UserController implements Initializable {
                     item.put("total_price", booking.getTotal_price());
                     item.put("payment_method" , booking.getPaymentMethod().getName());
 
-                    // Cancel button
-                    Button button = new Button();
-                    button.setId(booking.getId()+"");
-                    button.setText("Cancel");
-                    button.setTextFill(Color.WHITE);
-                    button.setStyle("-fx-background-color: red");
-                    button.setOnMouseClicked(mouseEvent ->{
-                        try {
-                            BookingRepository bookRepo = new BookingRepository();
-                            int bookingID = Integer.parseInt(button.getId());
-                            bookRepo.delete(bookingID);
-                            transactionButtonClicked();
-                        } catch (SQLException e) {
-                            System.out.println(e.getMessage());
-                            throw new RuntimeException(e);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-
-                    item.put("action" , button);
                     transactionItems.add(item);
                 }
 
@@ -304,8 +329,16 @@ public class UserController implements Initializable {
         BookingRepository bookingRepository = new BookingRepository();
         PaymentMethodRepository paymentMethodRepository = new PaymentMethodRepository();
 
+
         int totalTicket = Integer.parseInt(totalTicketField.getText());
         int method = paymentMethodField.getSelectionModel().getSelectedIndex()+1;
+
+        Integer booked_seat = (Integer) bookingRepository.getBookedSeatForMovieId(SelectedMovie.getMovie().getId());
+        int available_seat = SelectedMovie.getMovie().getLocation().getTotal_seat() - booked_seat;
+        if(available_seat - totalTicket < 0){
+            errorMessageLabel.setText("Jumlah tiket melebihi kursi yang tersedia!");
+            return;
+        }
 
         PaymentMethod paymentMethod = (PaymentMethod) paymentMethodRepository.get(method);
 
@@ -338,7 +371,6 @@ public class UserController implements Initializable {
             errorMessageLabel.setText("Password invalid");
             return;
         }
-
         try {
             userRepository.update(newUser);
             errorMessageLabel.setTextFill(Color.GREEN);

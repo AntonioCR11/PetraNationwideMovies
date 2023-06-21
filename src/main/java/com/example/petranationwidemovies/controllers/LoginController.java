@@ -43,7 +43,13 @@ public class LoginController {
         }
 
         Stage stageTheLabelBelongs = (Stage) toRegister.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("HomeView.fxml"));
+        String route = "";
+        if(UserLogin.getUser().getRole() == 0){
+            route = "AdminMovieView.fxml";
+        }else{
+            route = "HomeView.fxml";
+        }
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(route));
         stageTheLabelBelongs.setResizable(false);
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stageTheLabelBelongs.setScene(scene);

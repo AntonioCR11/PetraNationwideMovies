@@ -39,6 +39,16 @@ public class BookingRepository extends AbstractRepository {
         ps.setInt(1,id);
         return executeQuery(ps);
     }
+    public Object getBookedSeatForMovieId(int id) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT SUM(bookings.booked_seat) as booked_seat FROM bookings JOIN movies ON bookings.movie_id = movies.id WHERE movies.id = ? GROUP BY movies.id,movies.location_id");
+        ps.setInt(1,id);
+        ResultSet rs = ps.executeQuery();
+        Integer booked_seat = 0;
+        while(rs.next()){
+            booked_seat = rs.getInt("booked_seat");
+        }
+        return booked_seat;
+    }
     private Object executeQuery(PreparedStatement ps) throws SQLException {
         ResultSet rs = ps.executeQuery();
         List<Booking> ls = new ArrayList<>();
@@ -63,6 +73,7 @@ public class BookingRepository extends AbstractRepository {
         }
         return ls;
     }
+
 
     @Override
     public int update(Object element) throws SQLException {

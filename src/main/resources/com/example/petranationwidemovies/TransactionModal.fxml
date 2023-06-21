@@ -47,8 +47,7 @@
 
         <VBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Payment Method" />
-<!--            <TextField fx:id="" style="-fx-padding: 10px 20px" promptText="Input your nrp..."/>-->
-            <ChoiceBox fx:id="paymentMethodField"></ChoiceBox>
+            <ChoiceBox fx:id="paymentMethodField" ></ChoiceBox>
         </VBox>
 
         <Label fx:id="errorMessageLabel" textFill="red" />

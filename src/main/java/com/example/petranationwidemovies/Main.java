@@ -20,7 +20,10 @@ public class Main extends Application {
         // open login window
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginView.fxml"));
         stage.setResizable(false);
+
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+//        scene.getStylesheets().add(getClass().getResource("./css/login.css").toExternalForm());
+
         stage.setTitle("Petra Nationwide Movies");
         stage.setScene(scene);
         stage.show();

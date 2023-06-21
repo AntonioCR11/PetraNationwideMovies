@@ -81,29 +81,29 @@
     </VBox>
 
     <!-- Main Content -->
-    <VBox maxWidth="640" spacing="10" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-background-color: #FFFFFF; -fx-padding: 0px 20px 20px 20px">
+    <VBox maxWidth="640" spacing="10" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-background-color: #FFFFFF; -fx-padding: 20px">
         <Label text="Profile" style="-fx-font-size: 48px; -fx-font-weight: bold" />
 
         <VBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Username" />
-            <TextField fx:id="usernameField" style="-fx-padding: 10px 20px" promptText="Input your username..."/>
+            <TextField fx:id="usernameField"  style="-fx-padding: 10px 20px;-fx-font-size: 16px;" promptText="Input your username..."/>
         </VBox>
         <VBox spacing="10" alignment="CENTER_LEFT">
             <Label text="NRP" />
-            <TextField fx:id="nrpField" style="-fx-padding: 10px 20px" disable="true" promptText="Input your nrp..."/>
+            <TextField fx:id="nrpField" style="-fx-padding: 10px 20px;-fx-font-size: 16px;" disable="true" promptText="Input your nrp..."/>
         </VBox>
 
         <VBox spacing="10" alignment="CENTER_LEFT">
             <Label text="New Password" />
-            <PasswordField fx:id="newpasswordField" style="-fx-padding: 10px 20px" promptText="Input your password..."/>
+            <PasswordField fx:id="newpasswordField" style="-fx-padding: 10px 20px;-fx-font-size: 16px;" promptText="Input your password..."/>
         </VBox>
         <VBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Password" />
-            <PasswordField fx:id="passwordField" style="-fx-padding: 10px 20px" promptText="Input your password..."/>
+            <PasswordField fx:id="passwordField" style="-fx-padding: 10px 20px;-fx-font-size: 16px;" promptText="Input your password..."/>
         </VBox>
 
         <Label fx:id="errorMessageLabel" textFill="red" />
 
-        <Button fx:id="updateBtn" text="Update" onAction="#updateButtonClicked" style="-fx-padding: 8px 30px"/>
+        <Button fx:id="updateBtn" text="Update" textFill="white" onAction="#updateButtonClicked" style="-fx-padding: 8px 30px;-fx-background-color: #0b1f14;-fx-font-size: 16px;"/>
     </VBox>
 </GridPane>

@@ -20,6 +20,8 @@ public class RegisterController {
     @FXML
     private TextField nrpField;
     @FXML
+    public TextField phoneField;
+    @FXML
     private PasswordField passwordField;
     @FXML
     private Label errorMessageLabel;
@@ -30,11 +32,15 @@ public class RegisterController {
     private void registerButtonClicked() throws IOException {
         String nrp = nrpField.getText();
         String username = usernameField.getText();
+        String phone = phoneField.getText();
         String password = passwordField.getText();
+
         User user = new User();
         user.setName(username);
         user.setNrp(nrp);
+        user.setPhone(phone);
         user.setPassword(password);
+
         // todo set role
         user.setRole(1);
         if (isValidRegister(username,nrp,password)){
@@ -50,17 +56,12 @@ public class RegisterController {
             nrpField.setText("");
             usernameField.setText("");
             passwordField.setText("");
+            phoneField.setText("");
 
         } catch (SQLException e) {
             errorMessageLabel.setText("NRP sudah dipakai!");
-            return;
         }
 
-//        Stage stageTheLabelBelongs = (Stage) registerBtn.getScene().getWindow();
-//        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginView.fxml"));
-//        stageTheLabelBelongs.setResizable(false);
-//        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
-//        stageTheLabelBelongs.setScene(scene);
     }
     @FXML
     private void toLoginClicked() throws IOException {
