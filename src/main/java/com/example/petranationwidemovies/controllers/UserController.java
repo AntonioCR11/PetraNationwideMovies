@@ -74,6 +74,8 @@ public class UserController implements Initializable {
     @FXML
     public TextField nrpField = new TextField();
     @FXML
+    public TextField phoneField;
+    @FXML
     public PasswordField passwordField = new PasswordField();
     @FXML
     public PasswordField newpasswordField = new PasswordField();
@@ -285,6 +287,7 @@ public class UserController implements Initializable {
         Platform.runLater(() -> {
             usernameField.setText(UserLogin.getUser().getName());
             nrpField.setText(UserLogin.getUser().getNrp());
+            phoneField.setText(UserLogin.getUser().getPhone());
         });
     }
 
@@ -364,6 +367,7 @@ public class UserController implements Initializable {
         User newUser = new User();
         newUser.setName(usernameField.getText());
         newUser.setNrp(nrpField.getText());
+        newUser.setNrp(phoneField.getText());
         newUser.setPassword(newpasswordField.getText());
         newUser.setId(UserLogin.getUser().getId());
 

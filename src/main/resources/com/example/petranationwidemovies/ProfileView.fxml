@@ -92,6 +92,10 @@
             <Label text="NRP" />
             <TextField fx:id="nrpField" style="-fx-padding: 10px 20px;-fx-font-size: 16px;" disable="true" promptText="Input your nrp..."/>
         </VBox>
+        <VBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Phone" />
+            <TextField fx:id="phoneField" style="-fx-padding: 10px 20px;-fx-font-size: 16px;" promptText="Input your number..."/>
+        </VBox>
 
         <VBox spacing="10" alignment="CENTER_LEFT">
             <Label text="New Password" />
